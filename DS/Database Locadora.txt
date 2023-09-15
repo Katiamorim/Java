@@ -1,0 +1,174 @@
+MariaDB [(none)]> show databases;
+MariaDB [(none)]> create database locadora;
+MariaDB [(none)]> use locadora;
+MariaDB [locadora]> create table ceps(
+    -> id_cep int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    -> cep varchar(20));
+
+MariaDB [locadora]> describe ceps;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id_cep | int(11)     | NO   | PRI | NULL    | auto_increment |
+| cep    | varchar(20) | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+MariaDB [locadora]> create table cargos(
+    -> id_cargo int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    -> descricao varchar(50));
+Query OK, 0 rows affected (0.178 sec)
+
+MariaDB [locadora]> describe cargos;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id_cargo  | int(11)     | NO   | PRI | NULL    | auto_increment |
+| descricao | varchar(50) | YES  |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+
+MariaDB [locadora]> create table tipos_pagamento(
+    -> id_tipo_pagamento int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    -> descricao varchar(50));
+Query OK, 0 rows affected (0.162 sec)
+
+MariaDB [locadora]> describe tipos_pagamento;
++-------------------+-------------+------+-----+---------+----------------+
+| Field             | Type        | Null | Key | Default | Extra          |
++-------------------+-------------+------+-----+---------+----------------+
+| id_tipo_pagamento | int(11)     | NO   | PRI | NULL    | auto_increment |
+| descricao         | varchar(50) | YES  |     | NULL    |                |
++-------------------+-------------+------+-----+---------+----------------+
+
+MariaDB [locadora]> create table carros(
+    -> id_carro int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    -> modelo varchar(20),
+    -> marca varchar(20),
+    -> cor varchar(20),
+    -> km int);
+Query OK, 0 rows affected (0.156 sec)
+
+MariaDB [locadora]> describe carros;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| id_carro | int(11)     | NO   | PRI | NULL    | auto_increment |
+| modelo   | varchar(20) | YES  |     | NULL    |                |
+| marca    | varchar(20) | YES  |     | NULL    |                |
+| cor      | varchar(20) | YES  |     | NULL    |                |
+| km       | int(11)     | YES  |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+
+MariaDB [locadora]> create table funcionarios(
+    -> id_funcionario int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    -> nome varchar(50),
+    -> end varchar(50),
+    -> id_cep int,
+    -> FOREIGN KEY(id_cep) REFERENCES ceps(id_cep),
+    -> cidade varchar(50),
+    -> uf varchar(2),
+    -> celular int,
+    -> rg varchar(20),
+    -> cpf varchar(20),
+    -> email varchar(50),
+    -> id_cargo int,
+    -> FOREIGN KEY(id_cargo) REFERENCES cargos(id_cargo));
+Query OK, 0 rows affected (0.210 sec)
+
+MariaDB [locadora]> describe funcionarios;
++----------------+-------------+------+-----+---------+----------------+
+| Field          | Type        | Null | Key | Default | Extra          |
++----------------+-------------+------+-----+---------+----------------+
+| id_funcionario | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nome           | varchar(50) | YES  |     | NULL    |                |
+| end            | varchar(50) | YES  |     | NULL    |                |
+| id_cep         | int(11)     | YES  | MUL | NULL    |                |
+| cidade         | varchar(50) | YES  |     | NULL    |                |
+| uf             | varchar(2)  | YES  |     | NULL    |                |
+| celular        | int(11)     | YES  |     | NULL    |                |
+| rg             | varchar(20) | YES  |     | NULL    |                |
+| cpf            | varchar(20) | YES  |     | NULL    |                |
+| email          | varchar(50) | YES  |     | NULL    |                |
+| id_cargo       | int(11)     | YES  | MUL | NULL    |                |
++----------------+-------------+------+-----+---------+----------------+
+
+MariaDB [locadora]> create table lojas(
+    -> id_loja int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    -> nome varchar(50),
+    -> end varchar(50),
+    -> cidade varchar(50),
+    -> id_cep int,
+    -> FOREIGN KEY(id_cep) REFERENCES ceps(id_cep),
+    -> telefone int);
+Query OK, 0 rows affected (0.215 sec)
+
+MariaDB [locadora]> describe lojas;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| id_loja  | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nome     | varchar(50) | YES  |     | NULL    |                |
+| end      | varchar(50) | YES  |     | NULL    |                |
+| cidade   | varchar(50) | YES  |     | NULL    |                |
+| id_cep   | int(11)     | YES  | MUL | NULL    |                |
+| telefone | int(11)     | YES  |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+
+MariaDB [locadora]> create table clientes(
+    -> id_cliente int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    -> nome varchar(50),
+    -> end varchar(50),
+    -> cidade varchar(50),
+    -> uf varchar(2),
+    -> id_cep int,
+    -> FOREIGN KEY(id_cep) REFERENCES ceps(id_cep),
+    -> celular int,
+    -> rg varchar(20),
+    -> cpf varchar(20),
+    -> e_mail varchar(50));
+Query OK, 0 rows affected (0.207 sec)
+
+MariaDB [locadora]> describe clientes;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id_cliente | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nome       | varchar(50) | YES  |     | NULL    |                |
+| end        | varchar(50) | YES  |     | NULL    |                |
+| cidade     | varchar(50) | YES  |     | NULL    |                |
+| uf         | varchar(2)  | YES  |     | NULL    |                |
+| id_cep     | int(11)     | YES  | MUL | NULL    |                |
+| celular    | int(11)     | YES  |     | NULL    |                |
+| rg         | varchar(20) | YES  |     | NULL    |                |
+| cpf        | varchar(20) | YES  |     | NULL    |                |
+| e_mail     | varchar(50) | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+
+MariaDB [locadora]> create table locacoes(
+    -> id_locacao int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    -> id_cliente int,
+    -> FOREIGN KEY(id_cliente) REFERENCES clientes(id_cliente),
+    -> id_loja int,
+    -> FOREIGN KEY(id_loja) REFERENCES lojas(id_loja),
+    -> id_tipo_pagamento int,
+    -> FOREIGN KEY(id_tipo_pagamento) REFERENCES tipos_pagamento(id_tipo_pagamento),
+    -> id_carro int,
+    -> FOREIGN KEY(id_carro) REFERENCES carros(id_carro),
+    -> id_funcionario int,
+    -> FOREIGN KEY(id_funcionario) REFERENCES funcionarios(id_funcionario),
+    -> valor varchar(20),
+    -> data varchar(20));
+Query OK, 0 rows affected (0.237 sec)
+
+MariaDB [locadora]> describe locacoes;
++-------------------+-------------+------+-----+---------+----------------+
+| Field             | Type        | Null | Key | Default | Extra          |
++-------------------+-------------+------+-----+---------+----------------+
+| id_locacao        | int(11)     | NO   | PRI | NULL    | auto_increment |
+| id_cliente        | int(11)     | YES  | MUL | NULL    |                |
+| id_loja           | int(11)     | YES  | MUL | NULL    |                |
+| id_tipo_pagamento | int(11)     | YES  | MUL | NULL    |                |
+| id_carro          | int(11)     | YES  | MUL | NULL    |                |
+| id_funcionario    | int(11)     | YES  | MUL | NULL    |                |
+| valor             | varchar(20) | YES  |     | NULL    |                |
+| data              | varchar(20) | YES  |     | NULL    |                |
++-------------------+-------------+------+-----+---------+----------------+
+
